@@ -84,7 +84,7 @@ void	set_param(char **argv, t_param **passwd_params)
 
 void	new_passwd(char **passwd, t_param *passwd_params)
 {
-	*passwd = (char *)malloc(sizeof(char) * (passwd_params->count_symb + 1));
+	*passwd = (char *)calloc(sizeof(char) * (passwd_params->count_symb + 1), 0);
 	if (!(*passwd))
 		error_allocation();
 }
@@ -112,6 +112,7 @@ char	*get_num_symb(long int index)
 void	print_passwd(t_param *passwd_params)
 {
 	char	*passwd;
+	char	*symb;
 	// tmp
 	int		i;
 	long int num;
@@ -122,12 +123,14 @@ void	print_passwd(t_param *passwd_params)
 	i = 0;
 	while (i < passwd_params->count_symb)
 	{
-		srandom(i * getpid() + (unsigned int)random());
+		srandom((i + 1) * getpid() + (unsigned int)random());
 		num = random() % 10;
+		symb = get_num_symb(num);
+		if (strlen(passwd) > 0 && passwd[i - 1] == symb[0])
+			continue ;
 		strcat(passwd, get_num_symb(num));
 		i++;
 	}
-	passwd[i] = '\0';
 	puts("Generated password:");
 	puts(passwd);
 }
@@ -145,6 +148,6 @@ int main(int argc, char **argv)
 		print_passwd(passwd_params);
 	}
 	else
-		puts("Too few arguments");
+		puts("Error: too few arguments");
 	return 0;
 }
