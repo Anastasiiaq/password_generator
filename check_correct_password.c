@@ -45,24 +45,24 @@ static int	check_special_symb(char *str)
 	return (1);
 }
 
-int	check_correct_password(char *passwd, t_param *passwd_params)
+int	check_correct_password(char *passwd, t_param passwd_params)
 {
-	if (passwd_params->lowercase_letter != -1)
+	if (passwd_params.lowercase_letter != -1)
 	{
 		if (check_lowercase_letter(passwd) == 1)
 			return (1);
 	}
-	if (passwd_params->uppercase_letter != -1)
+	if (passwd_params.uppercase_letter != -1)
 	{
 		if (check_uppercase_letter(passwd) == 1)
 			return (1);
 	}
-	if (passwd_params->num != -1)
+	if (passwd_params.num != -1)
 	{
 		if (check_num(passwd) == 1)
 			return (1);
 	}
-	if (passwd_params->special_symb != -1)
+	if (passwd_params.special_symb != -1)
 	{
 		if (check_special_symb(passwd) == 1)
 			return (1);
