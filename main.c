@@ -129,8 +129,6 @@ void	set_num_symb(char *passwd, int iteration)
 	long int	num;
 	char		*symb;
 	
-//	srandom((iteration + 1) * getpid() + (unsigned int)random());
-//	num = random() % 10;
 	num = random_num(iteration + 1, '1');
 	symb = get_num_symb(num);
 	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
@@ -172,8 +170,6 @@ void	set_letter_symb(char *passwd, int iteration, char letter_type)
 	long int	num;
 	char		*symb;
 	
-//	srandom((iteration + 1) * getpid() + (unsigned int)random());
-//	num = random() % 26;
 	num = random_num(iteration + 1, letter_type);
 	if (letter_type == 'a')
 		symb = get_lowercase_symb(num);
@@ -206,8 +202,6 @@ void	set_special_symb(char *passwd, int iteration)
 	long int	num;
 	char		*symb;
 	
-//	srandom((iteration + 1) * getpid() + (unsigned int)random());
-//	num = random() % 32;
 	num = random_num(iteration + 1, '!');
 	symb = get_special_symb(num);
 	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
@@ -297,29 +291,27 @@ char	*get_position(char *passwd, char symb_replace)
 	return (passwd);
 }
 
-void	replace_letter_symb(char *passwd, char symb_replace, char letter_type)
-{
-	long int	num;
-	char		*symb;
-	char		*symb_addr;
-	
-//	srandom(symb_replace * getpid() + (unsigned int)random());
-//	num = random() % 26;
-	num = random_num(symb_replace, letter_type);
-	if (letter_type == 'a')
-		symb = get_lowercase_symb(num);
-	else
-		symb = get_uppercase_symb(num);
-	symb_addr = get_position(passwd, symb_replace);
-//	if (passwd != symb_addr && (*symb_addr == *(symb_addr - 1) || *symb_addr == *(symb_addr + 1)))
-//	{
-//		free(symb);
-//		replace_letter_symb(passwd, symb_replace, letter_type);
-//		return ;
-//	}
-	*symb_addr = symb[0];
-	free(symb);
-}
+//void	replace_letter_symb(char *passwd, char symb_replace, char letter_type)
+//{
+//	long int	num;
+//	char		*symb;
+//	char		*symb_addr;
+//
+//	num = random_num(symb_replace, letter_type);
+//	if (letter_type == 'a')
+//		symb = get_lowercase_symb(num);
+//	else
+//		symb = get_uppercase_symb(num);
+//	symb_addr = get_position(passwd, symb_replace);
+////	if (passwd != symb_addr && (*symb_addr == *(symb_addr - 1) || *symb_addr == *(symb_addr + 1)))
+////	{
+////		free(symb);
+////		replace_letter_symb(passwd, symb_replace, letter_type);
+////		return ;
+////	}
+//	*symb_addr = symb[0];
+//	free(symb);
+//}
 
 void	lower_count_value(char replace, t_edit_passwd *edit_symb)
 {
@@ -333,34 +325,19 @@ void	lower_count_value(char replace, t_edit_passwd *edit_symb)
 		edit_symb->count_special_symb--;
 }
 
-void	replace_with_letter(char *passwd, t_edit_passwd *edit_symb, char letter_type)
+void	replace_symb(char *passwd, char symb_replace, char symb_type)
 {
-	char	symb_max;
-	
-	symb_max = find_max(*edit_symb);
-	if (letter_type == 'a')
-	{
-		replace_letter_symb(passwd, symb_max, 'a');
-		edit_symb->count_lowercase++;
-	}
-	else
-	{
-		replace_letter_symb(passwd, symb_max, 'A');
-		edit_symb->count_uppercase++;
-	}
-	lower_count_value(symb_max, edit_symb);
-}
-
-void	replace_num_symb(char *passwd, char symb_replace)
-{
-	long int	num;
 	char		*symb;
 	char		*symb_addr;
 	
-//	srandom(symb_replace * getpid() + (unsigned int)random());
-//	num = random() % 10;
-	num = random_num(symb_replace, '1');
-	symb = get_num_symb(num);
+	if (symb_type == 'a')
+		symb = get_lowercase_symb(random_num(symb_replace, symb_type));
+	else if (symb_type == 'A')
+		symb = get_uppercase_symb(random_num(symb_replace, symb_type));
+	else if (symb_type == '1')
+		symb = get_num_symb(random_num(symb_replace, '1'));
+	else
+		symb = get_special_symb(random_num(symb_replace, '!'));
 	symb_addr = get_position(passwd, symb_replace);
 //	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
 //	{
@@ -372,44 +349,32 @@ void	replace_num_symb(char *passwd, char symb_replace)
 	free(symb);
 }
 
-void	replace_with_num(char *passwd, t_edit_passwd *edit_symb)
+void	increase_count_value(char symb, t_edit_passwd *edit_symb)
+{
+	if (symb == 'a')
+		edit_symb->count_lowercase++;
+	else if (symb == 'A')
+		edit_symb->count_uppercase++;
+	else if (symb == '1')
+		edit_symb->count_num++;
+	else if (symb == '!')
+		edit_symb->count_special_symb++;
+}
+
+void	replace_with_symb(char *passwd, t_edit_passwd *edit_symb, char symb_type)
 {
 	char	symb_max;
 	
 	symb_max = find_max(*edit_symb);
-	replace_num_symb(passwd, symb_max);
-	edit_symb->count_num++;
-	lower_count_value(symb_max, edit_symb);
-}
-
-void	replace_special_symb(char *passwd, char symb_replace)
-{
-	long int	num;
-	char		*symb;
-	char		*symb_addr;
-	
-//	srandom(symb_replace * getpid() + (unsigned int)random());
-//	num = random() % 32;
-	num = random_num(symb_replace, '!');
-	symb = get_special_symb(num);
-	symb_addr = get_position(passwd, symb_replace);
-//	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
-//	{
-//		free(symb);
-//		set_special_symb(passwd, iteration);
-//		return ;
-//	}
-	*symb_addr = symb[0];
-	free(symb);
-}
-
-void	replace_with_special_symb(char *passwd, t_edit_passwd *edit_symb)
-{
-	char	symb_max;
-	
-	symb_max = find_max(*edit_symb);
-	replace_special_symb(passwd, symb_max);
-	edit_symb->count_special_symb++;
+	if (symb_type == 'a')
+		replace_symb(passwd, symb_max, 'a');
+	else if (symb_type == 'A')
+		replace_symb(passwd, symb_max, 'A');
+	else if (symb_type == '1')
+		replace_symb(passwd, symb_max, '1');
+	else
+		replace_symb(passwd, symb_max, '!');
+	increase_count_value(symb_type, edit_symb);
 	lower_count_value(symb_max, edit_symb);
 }
 
@@ -420,13 +385,13 @@ void	edit_password(char **passwd, t_param *passwd_params)
 	init_edit_passwd_struct(&edit_symb);
 	count_symb_in_str(*passwd, &edit_symb, *passwd_params);
 	if (edit_symb.count_lowercase == 0)
-		replace_with_letter(*passwd, &edit_symb, 'a');
+		replace_with_symb(*passwd, &edit_symb, 'a');
 	if (edit_symb.count_uppercase == 0)
-		replace_with_letter(*passwd, &edit_symb, 'A');
+		replace_with_symb(*passwd, &edit_symb, 'A');
 	if (edit_symb.count_num == 0)
-		replace_with_num(*passwd, &edit_symb);
+		replace_with_symb(*passwd, &edit_symb, '1');
 	if (edit_symb.count_special_symb == 0)
-		replace_with_special_symb(*passwd, &edit_symb);
+		replace_with_symb(*passwd, &edit_symb, '!');
 	if (check_correct_password(*passwd, *passwd_params))
 		edit_password(passwd, passwd_params);
 }
