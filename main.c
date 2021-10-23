@@ -214,49 +214,31 @@ void	set_special_symb(char *passwd, int iteration)
 	free(symb);
 }
 
-
-void	print_passwd(t_param *passwd_params)
+void	create_password(char **passwd, t_param *passwd_params)
 {
-	char	*passwd;
-//	char	*symb;
 	long int	rand_ord_num;
-	// tmp
 	int		i;
-//	long int num;
-	
-	
+
 	set_order_num(passwd_params);
-	
-	new_passwd(&passwd, passwd_params);
+	new_passwd(passwd, passwd_params);
 	i = 0;
 	while (i < passwd_params->count_symb)
 	{
 		rand_ord_num = random_order_num(passwd_params);
 		if (passwd_params->lowercase_letter == rand_ord_num)
-			set_letter_symb(passwd, i, 'a');
+			set_letter_symb(*passwd, i, 'a');
 		else if (passwd_params->uppercase_letter == rand_ord_num)
-			set_letter_symb(passwd, i, 'A');
+			set_letter_symb(*passwd, i, 'A');
 		else if (passwd_params->num == rand_ord_num)
-			set_num_symb(passwd, i);
+			set_num_symb(*passwd, i);
 		else if (passwd_params->special_symb == rand_ord_num)
-			set_special_symb(passwd, i);
+			set_special_symb(*passwd, i);
 		i++;
 	}
-//	random_symb(passwd_params);
-	
-	
-	
-//	i = 0;
-//	while (i < passwd_params->count_symb)
-//	{
-//		srandom((i + 1) * getpid() + (unsigned int)random());
-//		num = random() % 10;
-//		symb = get_num_symb(num);
-//		if (strlen(passwd) > 0 && passwd[i - 1] == symb[0])
-//			continue ;
-//		strcat(passwd, get_num_symb(num));
-//		i++;
-//	}
+}
+
+void	print_passwd(char *passwd, t_param *passwd_params)
+{
 	puts("Generated password:");
 	puts(passwd);
 }
@@ -264,6 +246,7 @@ void	print_passwd(t_param *passwd_params)
 int main(int argc, char **argv)
 {
 	t_param	*passwd_params;
+	char	*passwd;
 	
 	if (argc >= 3 && argc <= 6)
 	{
@@ -271,7 +254,8 @@ int main(int argc, char **argv)
 		init_passwd_params(passwd_params);
 		get_count_param(argc, passwd_params);
 		set_param(argv, passwd_params);
-		print_passwd(passwd_params);
+		create_password(&passwd, passwd_params);
+		print_passwd(passwd, passwd_params);
 	}
 	else if (argc < 3)
 		puts("Error: too few arguments");
