@@ -2,7 +2,7 @@
 
 void	error_allocation()
 {
-	puts("\nError: memory allocation!\n");
+	puts("\n\033[1;31mError:\033[0m memory allocation!\n");
 	exit(-1);
 }
 
@@ -41,13 +41,13 @@ int	arg_is_num(char *argv)
 
 void	arg_is_num_err()
 {
-	puts("\nError: non-numeric argument!\n");
+	puts("\n\033[1;31mError:\033[0m non-numeric argument!\n");
 	exit(-1);
 }
 
 void	param_err()
 {
-	puts("\nError: invalid password parameters!\n");
+	puts("\n\033[1;31mError:\033[0m invalid password parameters!\n");
 	exit(-1);
 }
 
@@ -388,7 +388,7 @@ void	check_correct_param(t_param passwd_params)
 {
 	if (passwd_params.count_symb < passwd_params.count_params - 1)
 	{
-		puts("\nError: The password length is too small for the specified parameters!\n");
+		puts("\n\033[1;31mError:\033[0m The password length is too small for the specified parameters!\n");
 		exit(-1);
 	}
 }
@@ -411,9 +411,9 @@ int main(int argc, char **argv)
 		print_passwd(passwd, passwd_params);
 	}
 	else if (argc < 3)
-		puts("\nError: too few arguments\n");
+		puts("\n\033[1;31mError:\033[0m too few arguments\n");
 	else
-		puts("\nError: too many arguments\n");
+		puts("\n\033[1;31mError:\033[0m too many arguments\n");
 	
 	return 0;
 }
