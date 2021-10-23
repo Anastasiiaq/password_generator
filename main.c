@@ -2,7 +2,7 @@
 
 void	error_allocation()
 {
-	puts("Error: memory allocation");
+	puts("\nError: memory allocation!\n");
 	exit(-1);
 }
 
@@ -41,7 +41,13 @@ int	arg_is_num(char *argv)
 
 void	arg_is_num_err()
 {
-	puts("Error: non-numeric argument");
+	puts("\nError: non-numeric argument!\n");
+	exit(-1);
+}
+
+void	param_err()
+{
+	puts("\nError: invalid password parameters!\n");
 	exit(-1);
 }
 
@@ -63,6 +69,8 @@ void	set_param(char **argv, t_param *passwd_params)
 			passwd_params->num = 1;
 		else if (**argv == '!')
 			passwd_params->special_symb = 1;
+		else
+			param_err();
 		argv++;
 	}
 }
@@ -369,15 +377,18 @@ void	edit_password(char **passwd, t_param *passwd_params)
 
 void	print_passwd(char *passwd, t_param *passwd_params)
 {
-	puts("Generated password:");
+	puts("\nGenerated password:");
+	fputs("\033[1;31m", stdout);
 	puts(passwd);
+	fputs("\033[0m", stdout);
+	puts("");
 }
 
 void	check_correct_param(t_param passwd_params)
 {
 	if (passwd_params.count_symb < passwd_params.count_params - 1)
 	{
-		puts("Error: The password length is too small for the specified parameters!");
+		puts("\nError: The password length is too small for the specified parameters!\n");
 		exit(-1);
 	}
 }
@@ -400,9 +411,9 @@ int main(int argc, char **argv)
 		print_passwd(passwd, passwd_params);
 	}
 	else if (argc < 3)
-		puts("Error: too few arguments");
+		puts("\nError: too few arguments\n");
 	else
-		puts("Error: too many arguments");
+		puts("\nError: too many arguments\n");
 	
 	return 0;
 }
