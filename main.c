@@ -89,6 +89,20 @@ void	new_passwd(char **passwd, t_param passwd_params)
 		error_allocation();
 }
 
+long int	random_num(int mult, char symb)
+{
+	long int	num;
+	
+	srandom(mult * getpid() + (unsigned int)random());
+	if (symb == 'a' || symb == 'A')
+		num = random() % 26;
+	else if (symb == '1')
+		num = random() % 10;
+	else
+		num = random() % 32;
+	return (num);
+}
+
 long int	random_order_num(t_param passwd_params)
 {
 	long int num;
@@ -115,8 +129,9 @@ void	set_num_symb(char *passwd, int iteration)
 	long int	num;
 	char		*symb;
 	
-	srandom((iteration + 1) * getpid() + (unsigned int)random());
-	num = random() % 10;
+//	srandom((iteration + 1) * getpid() + (unsigned int)random());
+//	num = random() % 10;
+	num = random_num(iteration + 1, '1');
 	symb = get_num_symb(num);
 	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
 	{
@@ -157,8 +172,9 @@ void	set_letter_symb(char *passwd, int iteration, char letter_type)
 	long int	num;
 	char		*symb;
 	
-	srandom((iteration + 1) * getpid() + (unsigned int)random());
-	num = random() % 26;
+//	srandom((iteration + 1) * getpid() + (unsigned int)random());
+//	num = random() % 26;
+	num = random_num(iteration + 1, letter_type);
 	if (letter_type == 'a')
 		symb = get_lowercase_symb(num);
 	else
@@ -190,8 +206,9 @@ void	set_special_symb(char *passwd, int iteration)
 	long int	num;
 	char		*symb;
 	
-	srandom((iteration + 1) * getpid() + (unsigned int)random());
-	num = random() % 32;
+//	srandom((iteration + 1) * getpid() + (unsigned int)random());
+//	num = random() % 32;
+	num = random_num(iteration + 1, '!');
 	symb = get_special_symb(num);
 	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
 	{
@@ -286,8 +303,9 @@ void	replace_letter_symb(char *passwd, char symb_replace, char letter_type)
 	char		*symb;
 	char		*symb_addr;
 	
-	srandom(symb_replace * getpid() + (unsigned int)random());
-	num = random() % 26;
+//	srandom(symb_replace * getpid() + (unsigned int)random());
+//	num = random() % 26;
+	num = random_num(symb_replace, letter_type);
 	if (letter_type == 'a')
 		symb = get_lowercase_symb(num);
 	else
@@ -339,8 +357,9 @@ void	replace_num_symb(char *passwd, char symb_replace)
 	char		*symb;
 	char		*symb_addr;
 	
-	srandom(symb_replace * getpid() + (unsigned int)random());
-	num = random() % 10;
+//	srandom(symb_replace * getpid() + (unsigned int)random());
+//	num = random() % 10;
+	num = random_num(symb_replace, '1');
 	symb = get_num_symb(num);
 	symb_addr = get_position(passwd, symb_replace);
 //	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
@@ -369,8 +388,9 @@ void	replace_special_symb(char *passwd, char symb_replace)
 	char		*symb;
 	char		*symb_addr;
 	
-	srandom(symb_replace * getpid() + (unsigned int)random());
-	num = random() % 32;
+//	srandom(symb_replace * getpid() + (unsigned int)random());
+//	num = random() % 32;
+	num = random_num(symb_replace, '!');
 	symb = get_special_symb(num);
 	symb_addr = get_position(passwd, symb_replace);
 //	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
