@@ -1,19 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <time.h>
-#include <string.h>
-#include <unistd.h>
-
-typedef struct s_param
-{
-	int	count_symb;
-	int	lowercase_letter;
-	int	uppercase_letter;
-	int	num;
-	int special_symb;
-	int	count_params;
-}				t_param;
+#include "password_generator.h"
 
 void	error_allocation()
 {
@@ -237,6 +222,8 @@ void	create_password(char **passwd, t_param *passwd_params)
 	}
 }
 
+
+
 void	print_passwd(char *passwd, t_param *passwd_params)
 {
 	puts("Generated password:");
@@ -255,6 +242,8 @@ int main(int argc, char **argv)
 		get_count_param(argc, passwd_params);
 		set_param(argv, passwd_params);
 		create_password(&passwd, passwd_params);
+		if (check_correct_password(passwd, passwd_params))
+			puts("err");
 		print_passwd(passwd, passwd_params);
 	}
 	else if (argc < 3)
