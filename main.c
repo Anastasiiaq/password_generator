@@ -84,7 +84,7 @@ void	set_order_num(t_param *passwd_params)
 
 void	new_passwd(char **passwd, t_param passwd_params)
 {
-	*passwd = (char *)calloc(sizeof(char) * (passwd_params.count_symb + 1), 0);
+	*passwd = (char *)calloc(sizeof(char), (passwd_params.count_symb + 1));
 	if (!(*passwd))
 		error_allocation();
 }
@@ -350,8 +350,11 @@ void	edit_password(char **passwd, t_param *passwd_params)
 {
 	static t_edit_passwd	edit_symb;
 	
-	init_edit_passwd_struct(&edit_symb);
-	count_symb_in_str(*passwd, &edit_symb, *passwd_params);
+	if (edit_symb.count_lowercase == 0 && edit_symb.count_uppercase == 0 && edit_symb.count_num == 0 && edit_symb.count_special_symb == 0)
+	{
+		init_edit_passwd_struct(&edit_symb);
+		count_symb_in_str(*passwd, &edit_symb, *passwd_params);
+	}
 	if (edit_symb.count_lowercase == 0)
 		replace_with_symb(*passwd, &edit_symb, 'a');
 	if (edit_symb.count_uppercase == 0)
