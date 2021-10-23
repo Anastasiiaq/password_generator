@@ -120,51 +120,58 @@ long int	random_order_num(t_param passwd_params)
 	return (num);
 }
 
-char	*get_num_symb(long int index)
+void	set_base_val(char *base, char symb_type)
+{
+	char	*symb;
+	
+	if (symb_type == 'a')
+		symb = "abcdefghijklmnopqrstuvwxyz";
+	else if (symb_type == 'A')
+		symb = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	else if (symb_type == '1')
+		symb = "0123456789";
+	else
+		symb = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+	while (*symb != '\0')
+	{
+		*base = *symb;
+		base++;
+		symb++;
+	}
+	*base = '\0';
+}
+
+char	*get_base(char symb_type)
+{
+	char	*base;
+	
+	if (symb_type == 'a' || symb_type == 'A')
+		base = (char *)malloc(sizeof(char) * (26 + 1));
+	else if (symb_type == '1')
+		base = (char *)malloc(sizeof(char) * (10 + 1));
+	else
+		base = (char *)malloc(sizeof(char) * (32 + 1));
+	set_base_val(base, symb_type);
+	return (base);
+}
+
+char	*get_symb(long int index, char symb_type)
 {
 	char	*base;
 	char	*symb;
 	
-	base = "0123456789";
+	if (symb_type == 'a')
+		base = get_base('a');
+	else if (symb_type == 'A')
+		base = get_base('A');
+	else if (symb_type == '1')
+		base = get_base('1');
+	else
+		base = get_base('!');
 	symb = (char *)malloc(sizeof(char) * 2);
 	symb[0] = base[index];
 	symb[1] = '\0';
-	return (symb);
-}
-
-char	*get_lowercase_symb(long int index)
-{
-	char	*base;
-	char	*symb;
-	
-	base = "abcdefghijklmnopqrstuvwxyz";
-	symb = (char *)malloc(sizeof(char) * 2);			// проверка маллока
-	symb[0] = base[index];
-	symb[1] = '\0';
-	return (symb);
-}
-
-char	*get_uppercase_symb(long int index)
-{
-	char	*base;
-	char	*symb;
-
-	base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	symb = (char *)malloc(sizeof(char) * 2);			// проверка маллока
-	symb[0] = base[index];
-	symb[1] = '\0';
-	return (symb);
-}
-
-char	*get_special_symb(long int index)
-{
-	char	*base;
-	char	*symb;
-	
-	base =  "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-	symb = (char *)malloc(sizeof(char) * 2);
-	symb[0] = base[index];
-	symb[1] = '\0';
+	free(base);
 	return (symb);
 }
 
@@ -173,13 +180,13 @@ void	set_symb(char *passwd, int iteration, char symb_type)
 	char		*symb;
 	
 	if (symb_type == 'a')
-		symb = get_lowercase_symb(random_num(iteration + 1, symb_type));
+		symb = get_symb(random_num(iteration + 1, symb_type), 'a');
 	else if (symb_type == 'A')
-		symb = get_uppercase_symb(random_num(iteration + 1, symb_type));
+		symb = get_symb(random_num(iteration + 1, symb_type), 'A');
 	else if (symb_type == '1')
-		symb = get_num_symb(random_num(iteration + 1, symb_type));
+		symb = get_symb(random_num(iteration + 1, symb_type), '1');
 	else
-		symb = get_special_symb(random_num(iteration + 1, symb_type));
+		symb = get_symb(random_num(iteration + 1, symb_type), '!');
 	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
 	{
 		free(symb);
@@ -307,13 +314,13 @@ void	replace_symb(char *passwd, char symb_replace, char symb_type)
 	char		*symb_addr;
 	
 	if (symb_type == 'a')
-		symb = get_lowercase_symb(random_num(symb_replace, symb_type));
+		symb = get_symb(random_num(symb_replace, symb_type), 'a');
 	else if (symb_type == 'A')
-		symb = get_uppercase_symb(random_num(symb_replace, symb_type));
+		symb = get_symb(random_num(symb_replace, symb_type), 'A');
 	else if (symb_type == '1')
-		symb = get_num_symb(random_num(symb_replace, '1'));
+		symb = get_symb(random_num(symb_replace, '1'), '1');
 	else
-		symb = get_special_symb(random_num(symb_replace, '!'));
+		symb = get_symb(random_num(symb_replace, '!'), '!');
 	symb_addr = get_position(passwd, symb_replace);
 //	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
 //	{
