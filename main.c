@@ -61,13 +61,13 @@ void	set_param(char **argv, t_param *passwd_params)
 	argv += 2;
 	while (*argv != NULL)
 	{
-		if (**argv == 'a')
+		if (**argv == 'a' && passwd_params->lowercase_letter == -1)
 			passwd_params->lowercase_letter = 1;
-		else if (**argv == 'A')
+		else if (**argv == 'A' && passwd_params->uppercase_letter == -1)
 			passwd_params->uppercase_letter = 1;
-		else if (**argv == '1')
+		else if (**argv == '1' && passwd_params->num == -1)
 			passwd_params->num = 1;
-		else if (**argv == '!')
+		else if (**argv == '!' && passwd_params->special_symb == -1)
 			passwd_params->special_symb = 1;
 		else
 			param_err();
