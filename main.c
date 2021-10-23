@@ -417,6 +417,15 @@ void	print_passwd(char *passwd, t_param *passwd_params)
 	puts(passwd);
 }
 
+void	check_correct_param(t_param passwd_params)
+{
+	if (passwd_params.count_symb < passwd_params.count_params - 1)
+	{
+		puts("Error: The password length is too small for the specified parameters!");
+		exit(-1);
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_param	*passwd_params;
@@ -428,6 +437,7 @@ int main(int argc, char **argv)
 		init_passwd_params(passwd_params);
 		get_count_param(argc, passwd_params);
 		set_param(argv, passwd_params);
+		check_correct_param(*passwd_params);
 		create_password(&passwd, passwd_params);
 		if (check_correct_password(passwd, *passwd_params))
 			edit_password(&passwd, passwd_params);
