@@ -124,23 +124,6 @@ char	*get_num_symb(long int index)
 	return (symb);
 }
 
-void	set_num_symb(char *passwd, int iteration)
-{
-	long int	num;
-	char		*symb;
-	
-	num = random_num(iteration + 1, '1');
-	symb = get_num_symb(num);
-	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
-	{
-		free(symb);
-		set_num_symb(passwd, iteration);
-		return ;
-	}
-	strcat(passwd, symb);
-	free(symb);
-}
-
 char	*get_lowercase_symb(long int index)
 {
 	char	*base;
@@ -165,26 +148,6 @@ char	*get_uppercase_symb(long int index)
 	return (symb);
 }
 
-void	set_letter_symb(char *passwd, int iteration, char letter_type)
-{
-	long int	num;
-	char		*symb;
-	
-	num = random_num(iteration + 1, letter_type);
-	if (letter_type == 'a')
-		symb = get_lowercase_symb(num);
-	else
-		symb = get_uppercase_symb(num);
-	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
-	{
-		free(symb);
-		set_letter_symb(passwd, iteration, letter_type);
-		return ;
-	}
-	strcat(passwd, symb);
-	free(symb);
-}
-
 char	*get_special_symb(long int index)
 {
 	char	*base;
@@ -197,17 +160,22 @@ char	*get_special_symb(long int index)
 	return (symb);
 }
 
-void	set_special_symb(char *passwd, int iteration)
+void	set_symb(char *passwd, int iteration, char symb_type)
 {
-	long int	num;
 	char		*symb;
 	
-	num = random_num(iteration + 1, '!');
-	symb = get_special_symb(num);
+	if (symb_type == 'a')
+		symb = get_lowercase_symb(random_num(iteration + 1, symb_type));
+	else if (symb_type == 'A')
+		symb = get_uppercase_symb(random_num(iteration + 1, symb_type));
+	else if (symb_type == '1')
+		symb = get_num_symb(random_num(iteration + 1, symb_type));
+	else
+		symb = get_special_symb(random_num(iteration + 1, symb_type));
 	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
 	{
 		free(symb);
-		set_special_symb(passwd, iteration);
+		set_symb(passwd, iteration, symb_type);
 		return ;
 	}
 	strcat(passwd, symb);
@@ -226,13 +194,13 @@ void	create_password(char **passwd, t_param *passwd_params)
 	{
 		rand_ord_num = random_order_num(*passwd_params);
 		if (passwd_params->lowercase_letter == rand_ord_num)
-			set_letter_symb(*passwd, i, 'a');
+			set_symb(*passwd, i, 'a');
 		else if (passwd_params->uppercase_letter == rand_ord_num)
-			set_letter_symb(*passwd, i, 'A');
+			set_symb(*passwd, i, 'A');
 		else if (passwd_params->num == rand_ord_num)
-			set_num_symb(*passwd, i);
+			set_symb(*passwd, i, '1');
 		else if (passwd_params->special_symb == rand_ord_num)
-			set_special_symb(*passwd, i);
+			set_symb(*passwd, i, '!');
 		i++;
 	}
 }
