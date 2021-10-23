@@ -1,8 +1,10 @@
 #include "password_generator.h"
 
-void	error_allocation()
+void	sys_call_err()
 {
-	puts("\n\033[1;31mError:\033[0m memory allocation!\n");
+	fputs("\n\033[1;31mError:\033[0m ", stdout);
+	puts(strerror(errno));
+	puts("");
 	exit(-1);
 }
 
@@ -10,7 +12,7 @@ void	new_params(t_param **passwd_params)
 {
 	*passwd_params = (t_param *)malloc(sizeof(t_param));
 	if (!(*passwd_params))
-		error_allocation();
+		sys_call_err();
 }
 
 void	init_passwd_params(t_param *passwd_params)
@@ -94,7 +96,7 @@ void	new_passwd(char **passwd, t_param passwd_params)
 {
 	*passwd = (char *)calloc(sizeof(char), (passwd_params.count_symb + 1));
 	if (!(*passwd))
-		error_allocation();
+		sys_call_err();
 }
 
 long int	random_num(int mult, char symb)
@@ -151,6 +153,8 @@ char	*get_base(char symb_type)
 		base = (char *)malloc(sizeof(char) * (10 + 1));
 	else
 		base = (char *)malloc(sizeof(char) * (32 + 1));
+	if (!base)
+		sys_call_err();
 	set_base_val(base, symb_type);
 	return (base);
 }
@@ -169,6 +173,8 @@ char	*get_symb(long int index, char symb_type)
 	else
 		base = get_base('!');
 	symb = (char *)malloc(sizeof(char) * 2);
+	if (!symb)
+		sys_call_err();
 	symb[0] = base[index];
 	symb[1] = '\0';
 	free(base);
