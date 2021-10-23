@@ -207,10 +207,10 @@ void	create_password(char **passwd, t_param *passwd_params)
 
 void	init_edit_passwd_struct(t_edit_passwd *edit_passwd_struct)
 {
-	edit_passwd_struct->count_lowercase = 0;
-	edit_passwd_struct->count_uppercase = 0;
-	edit_passwd_struct->count_num = 0;
-	edit_passwd_struct->count_special_symb = 0;
+	edit_passwd_struct->count_lowercase = -1;
+	edit_passwd_struct->count_uppercase = -1;
+	edit_passwd_struct->count_num = -1;
+	edit_passwd_struct->count_special_symb = -1;
 }
 
 char	find_max(t_edit_passwd edit_symb)
@@ -348,7 +348,7 @@ void	replace_with_symb(char *passwd, t_edit_passwd *edit_symb, char symb_type)
 
 void	edit_password(char **passwd, t_param *passwd_params)
 {
-	t_edit_passwd	edit_symb;
+	static t_edit_passwd	edit_symb;
 	
 	init_edit_passwd_struct(&edit_symb);
 	count_symb_in_str(*passwd, &edit_symb, *passwd_params);
