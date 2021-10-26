@@ -280,28 +280,6 @@ char	*get_position(char *passwd, char symb_replace)
 	return (passwd);
 }
 
-//void	replace_letter_symb(char *passwd, char symb_replace, char letter_type)
-//{
-//	long int	num;
-//	char		*symb;
-//	char		*symb_addr;
-//
-//	num = random_num(symb_replace, letter_type);
-//	if (letter_type == 'a')
-//		symb = get_lowercase_symb(num);
-//	else
-//		symb = get_uppercase_symb(num);
-//	symb_addr = get_position(passwd, symb_replace);
-////	if (passwd != symb_addr && (*symb_addr == *(symb_addr - 1) || *symb_addr == *(symb_addr + 1)))
-////	{
-////		free(symb);
-////		replace_letter_symb(passwd, symb_replace, letter_type);
-////		return ;
-////	}
-//	*symb_addr = symb[0];
-//	free(symb);
-//}
-
 void	lower_count_value(char replace, t_edit_passwd *edit_symb)
 {
 	if (replace == 'a')
@@ -328,12 +306,12 @@ void	replace_symb(char *passwd, char symb_replace, char symb_type)
 	else
 		symb = get_symb(random_num(symb_replace, '!'), '!');
 	symb_addr = get_position(passwd, symb_replace);
-//	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
-//	{
-//		free(symb);
-//		set_num_symb(passwd, iteration);
-//		return ;
-//	}
+	if (symb_addr[0] == symb_addr[1])
+	{
+		free(symb);
+		replace_symb(passwd, symb_replace, symb_type);
+		return ;
+	}
 	*symb_addr = symb[0];
 	free(symb);
 }
@@ -388,7 +366,7 @@ void	edit_password(char **passwd, t_param *passwd_params)
 		edit_password(passwd, passwd_params);
 }
 
-void	print_passwd(char *passwd, t_param *passwd_params)
+void	print_passwd(char *passwd)
 {
 	puts("\nGenerated password:");
 	fputs("\033[1;31m", stdout);
@@ -421,7 +399,9 @@ int main(int argc, char **argv)
 		create_password(&passwd, passwd_params);
 		if (check_correct_password(passwd, *passwd_params))
 			edit_password(&passwd, passwd_params);
-		print_passwd(passwd, passwd_params);
+		print_passwd(passwd);
+		free(passwd_params);
+		free(passwd);
 	}
 	else if (argc < 3)
 		puts("\n\033[1;31mError:\033[0m too few arguments\n");
