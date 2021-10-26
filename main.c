@@ -9,6 +9,16 @@ void	print_passwd(char *passwd)
 	puts("");
 }
 
+void	rules(void)
+{
+	puts("To generate a password, enter:");
+	puts("* number of symbols");
+	puts("* 'a' - to use lowercase letters");
+	puts("* 'A' - to use uppercase letters");
+	puts("* '1' - to use numbers");
+	puts("* '!' - to use special symbols\n");
+}
+
 void	get_count_param(int argc, t_param *passwd_params)
 {
 	passwd_params->count_params = argc - 1;
@@ -43,7 +53,10 @@ int main(int argc, char **argv)
 		free(passwd);
 	}
 	else if (argc < 3)
+	{
 		puts("\n\033[1;31mError:\033[0m too few arguments\n");
+		rules();
+	}
 	else
 		puts("\n\033[1;31mError:\033[0m too many arguments\n");
 	return 0;
