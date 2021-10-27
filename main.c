@@ -9,17 +9,6 @@ void	print_passwd(char *passwd)
 	puts("");
 }
 
-void	help(void)
-{
-	puts("\nTo \033[35mgenerate a password\033[0m, enter:");
-	puts("* number of symbols");
-	puts("* 'a' - to use lowercase letters");
-	puts("* 'A' - to use uppercase letters");
-	puts("* '1' - to use numbers");
-	puts("* '!' - to use special symbols\n");
-	puts("\033[32mExample:\033[0m genpasswd 8 a A 1 !\n");
-}
-
 void	get_count_param(int argc, t_param *passwd_params)
 {
 	passwd_params->count_params = argc - 1;
@@ -34,12 +23,27 @@ void	check_correct_param(t_param passwd_params)
 	}
 }
 
-void	find_help(char *arg)
+void	help(void)
 {
-	if (strcmp(arg, "-help") == 0)
+	puts("\nTo \033[35mgenerate a password\033[0m, enter:");
+	puts("* number of symbols");
+	puts("* 'a' - to use lowercase letters");
+	puts("* 'A' - to use uppercase letters");
+	puts("* '1' - to use numbers");
+	puts("* '!' - to use special symbols\n");
+	puts("\033[32mExample:\033[0m genpasswd 8 a A 1 !\n");
+}
+
+void	find_help(char **argv)
+{
+	while (*argv != NULL)
 	{
-		help();
-		exit(0);
+		if (strcmp(*argv, "-help") == 0 || strcmp(*argv, "--help") == 0)
+		{
+			help();
+			exit(0);
+		}
+		argv++;
 	}
 }
 
@@ -48,6 +52,7 @@ int main(int argc, char **argv)
 	t_param	*passwd_params;
 	char	*passwd;
 	
+	find_help(argv);
 	if (argc >= 3 && argc <= 6)
 	{
 		new_params(&passwd_params);
@@ -63,11 +68,7 @@ int main(int argc, char **argv)
 		free(passwd);
 	}
 	else if (argc < 3)
-	{
-		if (argc == 2)
-			find_help(argv[1]);
 		puts("\n\033[1;31mError:\033[0m too few arguments\n");
-	}
 	else
 		puts("\n\033[1;31mError:\033[0m too many arguments\n");
 	return 0;
