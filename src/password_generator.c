@@ -27,11 +27,11 @@ void	help(void)
 {
 	puts("\nTo \033[35mgenerate a password\033[0m, enter:");
 	puts("* number of symbols in the range [0;1000000]");
-	puts("* 'a' - to use lowercase letters");
-	puts("* 'A' - to use uppercase letters");
-	puts("* '1' - to use numbers");
-	puts("* '@' - to use special symbols\n");
-	puts("\033[32mExample:\033[0m genpasswd 8 a A 1 @\n");
+	puts("  -a    Use lowercase letters");
+	puts("  -A    Use uppercase letters");
+	puts("  -1    Use numbers");
+	puts("  -@    Use special symbols\n");
+	puts("\033[32mExample:\033[0m genpasswd 8 -a -A -1 -@\n");
 }
 
 void	find_help(char **argv)
