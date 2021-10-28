@@ -26,7 +26,7 @@ void	check_correct_param(t_param passwd_params)
 void	help(void)
 {
 	puts("\nTo \033[35mgenerate a password\033[0m, enter:");
-	puts("* number of symbols");
+	puts("* number of symbols in the range [0;1000000]");
 	puts("* 'a' - to use lowercase letters");
 	puts("* 'A' - to use uppercase letters");
 	puts("* '1' - to use numbers");

@@ -11,10 +11,17 @@ static int	arg_is_num(char *argv)
 	return (0);
 }
 
+static void	check_max_passwd_length(char *argv)
+{
+	if (strlen(argv) >= strlen("1000000") && strcmp(argv, "1000000") > 0)
+		param_err();
+}
+
 void	set_param(char **argv, t_param *passwd_params)
 {
 	if (arg_is_num(argv[1]) != 0)
-		arg_is_num_err();
+		param_err();
+	check_max_passwd_length(argv[1]);
 	passwd_params->count_symb = atoi(argv[1]);
 	if (passwd_params->count_symb == 0)
 		return ;

@@ -8,12 +8,6 @@ void	sys_call_err(void)
 	exit(-1);
 }
 
-void	arg_is_num_err(void)
-{
-	puts("\n\033[1;31mError:\033[0m non-numeric argument!\n");
-	exit(-1);
-}
-
 void	param_err(void)
 {
 	puts("\n\033[1;31mError:\033[0m invalid password parameters!\n");

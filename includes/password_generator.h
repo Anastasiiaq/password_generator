@@ -56,7 +56,6 @@ void	set_param(char **argv, t_param *passwd_params);
 
 /* errors.c */
 void		sys_call_err(void);
-void		arg_is_num_err(void);
 void		param_err(void);
 
 #endif
