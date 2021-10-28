@@ -53,10 +53,11 @@ void		new_params(t_param **passwd_params);
 void		init_passwd_params(t_param *passwd_params);
 
 /* set_password_params.c */
-void	set_param(char **argv, t_param *passwd_params);
+void		set_param(char **argv, t_param *passwd_params);
 
 /* errors.c */
 void		sys_call_err(void);
-void		param_err(void);
+void		passwd_length_err(void);
+void		param_err(char *flag);
 
 #endif

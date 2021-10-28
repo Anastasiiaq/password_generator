@@ -14,17 +14,17 @@ static int	arg_is_num(char *argv)
 static void	check_max_passwd_length(char *argv)
 {
 	if (strlen(argv) >= strlen("1000000") && strcmp(argv, "1000000") > 0)
-		param_err();
+		passwd_length_err();
 }
 
 void	set_param(char **argv, t_param *passwd_params)
 {
 	if (arg_is_num(argv[1]) != 0)
-		param_err();
+		passwd_length_err();
 	check_max_passwd_length(argv[1]);
 	passwd_params->count_symb = atoi(argv[1]);
 	if (passwd_params->count_symb == 0)
-		param_err();
+		passwd_length_err();
 	argv += 2;
 	while (*argv != NULL)
 	{
@@ -37,7 +37,7 @@ void	set_param(char **argv, t_param *passwd_params)
 		else if (strcmp(*argv, "-@") == 0 && passwd_params->special_symb == -1)
 			passwd_params->special_symb = 1;
 		else
-			param_err();
+			param_err(*argv);
 		argv++;
 	}
 }
