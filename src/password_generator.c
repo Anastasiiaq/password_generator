@@ -47,22 +47,35 @@ void	find_help(char **argv)
 	}
 }
 
+void	set_deflt(t_param *passwd_params)
+{
+	passwd_params->lowercase_letter = 1;
+	passwd_params->uppercase_letter = 1;
+	passwd_params->num = 1;
+	passwd_params->special_symb = 1;
+	passwd_params->count_params += 4;
+	passwd_params->dflt = 1;
+}
+
 int main(int argc, char **argv)
 {
 	t_param	*passwd_params;
 	char	*passwd;
 	
 	find_help(argv);
-	if (argc >= 3 && argc <= 6)
+	if (argc >= 2 && argc <= 6)
 	{
 		new_params(&passwd_params);
 		init_passwd_params(passwd_params);
 		get_count_param(argc, passwd_params);
 		set_param(argv, passwd_params);
 		check_correct_param(*passwd_params);
+		if (passwd_params->count_params == 1)
+			set_deflt(passwd_params);
 		create_password(&passwd, passwd_params);
-		if (check_correct_password(passwd, *passwd_params))
-			edit_password(&passwd, passwd_params);
+		if (passwd_params->dflt == 0)
+			if (check_correct_password(passwd, *passwd_params))
+				edit_password(&passwd, passwd_params);
 		print_passwd(passwd);
 		free(passwd_params);
 		free(passwd);

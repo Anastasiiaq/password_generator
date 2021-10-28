@@ -24,7 +24,7 @@ void	set_param(char **argv, t_param *passwd_params)
 	check_max_passwd_length(argv[1]);
 	passwd_params->count_symb = atoi(argv[1]);
 	if (passwd_params->count_symb == 0)
-		return ;
+		param_err();
 	argv += 2;
 	while (*argv != NULL)
 	{

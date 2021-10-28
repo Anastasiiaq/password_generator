@@ -15,4 +15,5 @@ void	init_passwd_params(t_param *passwd_params)
 	passwd_params->num = -1;
 	passwd_params->special_symb = -1;
 	passwd_params->count_params = 0;
+	passwd_params->dflt = 0;
 }

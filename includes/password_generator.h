@@ -17,6 +17,7 @@ typedef struct s_param
 	int	num;
 	int	special_symb;
 	int	count_params;
+	int	dflt;
 }				t_param;
 
 typedef struct s_edit_passwd
