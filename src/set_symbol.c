@@ -63,7 +63,7 @@ char	*get_symb(long int index, char symb_type)
 	else if (symb_type == '1')
 		base = get_base('1');
 	else
-		base = get_base('!');
+		base = get_base('@');
 	symb = (char *)malloc(sizeof(char) * 2);
 	if (!symb)
 		sys_call_err();
@@ -84,7 +84,7 @@ void	set_symb(char *passwd, int iteration, char symb_type)
 	else if (symb_type == '1')
 		symb = get_symb(random_num(iteration + 1, symb_type), '1');
 	else
-		symb = get_symb(random_num(iteration + 1, symb_type), '!');
+		symb = get_symb(random_num(iteration + 1, symb_type), '@');
 	if (strlen(passwd) > 0 && passwd[iteration - 1] == symb[0])
 	{
 		free(symb);

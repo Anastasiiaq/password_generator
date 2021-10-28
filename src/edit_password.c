@@ -24,7 +24,7 @@ void	edit_password(char **passwd, t_param *passwd_params)
 	if (edit_symb.count_num == 0)
 		replace_with_symb(*passwd, &edit_symb, '1');
 	if (edit_symb.count_special_symb == 0)
-		replace_with_symb(*passwd, &edit_symb, '!');
+		replace_with_symb(*passwd, &edit_symb, '@');
 	if (check_correct_password(*passwd, *passwd_params))
 		edit_password(passwd, passwd_params);
 }

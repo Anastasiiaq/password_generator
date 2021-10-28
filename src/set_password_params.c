@@ -27,7 +27,7 @@ void	set_param(char **argv, t_param *passwd_params)
 			passwd_params->uppercase_letter = 1;
 		else if (strcmp(*argv, "1") == 0 && passwd_params->num == -1)
 			passwd_params->num = 1;
-		else if (strcmp(*argv, "!") == 0 && passwd_params->special_symb == -1)
+		else if (strcmp(*argv, "@") == 0 && passwd_params->special_symb == -1)
 			passwd_params->special_symb = 1;
 		else
 			param_err();

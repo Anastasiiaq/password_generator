@@ -15,7 +15,7 @@ static char	find_max(t_edit_passwd edit_symb)
 		&& edit_symb.count_num >= edit_symb.count_special_symb)
 		return ('1');
 	else
-		return ('!');
+		return ('@');
 }
 
 static char	*get_position(char *passwd, char symb_replace)
@@ -35,7 +35,7 @@ static char	*get_position(char *passwd, char symb_replace)
 		while (*passwd != '\0' && !(*passwd >= '0' && *passwd <= '9'))
 			passwd++;
 	}
-	else if (symb_replace == '!')
+	else if (symb_replace == '@')
 	{
 		while (*passwd != '\0' && !((*passwd >= '!' && *passwd <= '/')
 			|| (*passwd >= ':' && *passwd <= '@')
@@ -54,7 +54,7 @@ static void	lower_count_value(char replace, t_edit_passwd *edit_symb)
 		edit_symb->count_uppercase--;
 	else if (replace == '1')
 		edit_symb->count_num--;
-	else if (replace == '!')
+	else if (replace == '@')
 		edit_symb->count_special_symb--;
 }
 
@@ -66,7 +66,7 @@ static void	increase_count_value(char symb, t_edit_passwd *edit_symb)
 		edit_symb->count_uppercase++;
 	else if (symb == '1')
 		edit_symb->count_num++;
-	else if (symb == '!')
+	else if (symb == '@')
 		edit_symb->count_special_symb++;
 }
 
@@ -82,7 +82,7 @@ static void	replace_symb(char *passwd, char symb_replace, char symb_type)
 	else if (symb_type == '1')
 		symb = get_symb(random_num(symb_replace, '1'), '1');
 	else
-		symb = get_symb(random_num(symb_replace, '!'), '!');
+		symb = get_symb(random_num(symb_replace, '@'), '@');
 	symb_addr = get_position(passwd, symb_replace);
 	if (symb_addr[0] == symb_addr[1])
 	{
@@ -106,7 +106,7 @@ void	replace_with_symb(char *passwd, t_edit_passwd *edit_symb, char symb_type)
 	else if (symb_type == '1')
 		replace_symb(passwd, symb_max, '1');
 	else
-		replace_symb(passwd, symb_max, '!');
+		replace_symb(passwd, symb_max, '@');
 	increase_count_value(symb_type, edit_symb);
 	lower_count_value(symb_max, edit_symb);
 }

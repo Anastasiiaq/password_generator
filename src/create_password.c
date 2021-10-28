@@ -49,7 +49,7 @@ void	create_password(char **passwd, t_param *passwd_params)
 		else if (passwd_params->num == rand_ord_num)
 			set_symb(*passwd, i, '1');
 		else if (passwd_params->special_symb == rand_ord_num)
-			set_symb(*passwd, i, '!');
+			set_symb(*passwd, i, '@');
 		i++;
 	}
 }
