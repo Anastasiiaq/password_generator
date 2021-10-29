@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 	char	*passwd;
 	
 	find_help(argv);
-	if (argc >= 2 && argc <= 6)
+	if (argc > 1)
 	{
 		new_params(&passwd_params);
 		init_passwd_params(passwd_params);
@@ -87,9 +87,7 @@ int main(int argc, char **argv)
 		free(passwd_params);
 		free(passwd);
 	}
-	else if (argc < 3)
-		puts("\n\033[1;31mError:\033[0m too few arguments\n");
 	else
-		puts("\n\033[1;31mError:\033[0m too many arguments\n");
+		puts("\n\033[1;31mError:\033[0m too few arguments\n");
 	return 0;
 }
