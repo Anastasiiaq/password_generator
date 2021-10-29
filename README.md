@@ -12,7 +12,7 @@ Run the program as following :
 ./genpasswd [number of characters in the password] [options]
 ```
 
-By default, the program will generate a password with all the options enabled.
+By default, the program will generate a password randomly.
 
 <img width="640" alt="default" src="https://github.com/Anastasiiaq/password_generator/blob/master/screenshots/default.png">
 
