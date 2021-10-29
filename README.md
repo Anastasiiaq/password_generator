@@ -14,13 +14,13 @@ Run the program as following :
 
 By default, the program will generate a password with all the options enabled.
 
-// default photo
+<img width="640" alt="default" src="https://github.com/Anastasiiaq/password_generator/blob/master/screenshots/default.png">
 
 The program can generate a password from 1 to 1.000.000 characters.
 
 To read how to use the program, just call ``-help``.
 
-// help photo
+<img width="640" alt="help" src="https://github.com/Anastasiiaq/password_generator/blob/master/screenshots/help.png">
 
 ### Options
 
@@ -35,3 +35,5 @@ To configure generation, use the following flags:
 ``-@`` - to use at least 1 special symbol
 
 Characters running in a row are not repeated.
+
+<img width="640" alt="generator" src="https://github.com/Anastasiiaq/password_generator/blob/master/screenshots/generator.png">
