@@ -9,9 +9,17 @@ void	print_passwd(char *passwd)
 	puts("");
 }
 
-void	get_count_param(int argc, t_param *passwd_params)
+void	get_count_param(t_param *passwd_params)
 {
-	passwd_params->count_params = argc - 1;
+	passwd_params->count_params++;
+	if (passwd_params->lowercase_letter == 1)
+		passwd_params->count_params++;
+	if (passwd_params->uppercase_letter == 1)
+		passwd_params->count_params++;
+	if (passwd_params->num == 1)
+		passwd_params->count_params++;
+	if (passwd_params->special_symb == 1)
+		passwd_params->count_params++;
 }
 
 void	check_correct_param(t_param passwd_params)
@@ -67,8 +75,8 @@ int main(int argc, char **argv)
 	{
 		new_params(&passwd_params);
 		init_passwd_params(passwd_params);
-		get_count_param(argc, passwd_params);
 		set_param(argv, passwd_params);
+		get_count_param(passwd_params);
 		check_correct_param(*passwd_params);
 		if (passwd_params->count_params == 1)
 			set_deflt(passwd_params);
