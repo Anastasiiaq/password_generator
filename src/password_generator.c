@@ -64,7 +64,7 @@ void	set_deflt(t_param *passwd_params)
 	passwd_params->dflt = 1;
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_param	*passwd_params;
 	char	*passwd;
@@ -89,5 +89,5 @@ int main(int argc, char **argv)
 	}
 	else
 		puts("\n\033[1;31mError:\033[0m too few arguments\n");
-	return 0;
+	return (0);
 }

@@ -1,13 +1,13 @@
-#ifndef password_generator_h
-#define password_generator_h
+#ifndef PASSWORD_GENERATOR_H
+# define PASSWORD_GENERATOR_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <time.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/errno.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <ctype.h>
+# include <time.h>
+# include <string.h>
+# include <unistd.h>
+# include <sys/errno.h>
 
 typedef struct s_param
 {
