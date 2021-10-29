@@ -26,8 +26,8 @@ static long int	random_order_num(t_param passwd_params)
 {
 	long int	num;
 	
-	srandom(passwd_params.count_params * getpid() + (unsigned int)random());
-	num = random() % (passwd_params.count_params - 1);
+	srandom(passwd_params.count_flags * getpid() + (unsigned int)random());
+	num = random() % (passwd_params.count_flags);
 	return (num);
 }
 

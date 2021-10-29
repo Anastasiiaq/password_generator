@@ -11,20 +11,19 @@ void	print_passwd(char *passwd)
 
 void	get_count_param(t_param *passwd_params)
 {
-	passwd_params->count_params++;
 	if (passwd_params->lowercase_letter == 1)
-		passwd_params->count_params++;
+		passwd_params->count_flags++;
 	if (passwd_params->uppercase_letter == 1)
-		passwd_params->count_params++;
+		passwd_params->count_flags++;
 	if (passwd_params->num == 1)
-		passwd_params->count_params++;
+		passwd_params->count_flags++;
 	if (passwd_params->special_symb == 1)
-		passwd_params->count_params++;
+		passwd_params->count_flags++;
 }
 
 void	check_correct_param(t_param passwd_params)
 {
-	if (passwd_params.count_symb < passwd_params.count_params - 1)
+	if (passwd_params.count_symb < passwd_params.count_flags)
 	{
 		puts("\n\033[1;31mError:\033[0m The password length is too small for the specified parameters!\n");
 		exit(-1);
@@ -61,7 +60,7 @@ void	set_deflt(t_param *passwd_params)
 	passwd_params->uppercase_letter = 1;
 	passwd_params->num = 1;
 	passwd_params->special_symb = 1;
-	passwd_params->count_params += 4;
+	passwd_params->count_flags += 4;
 	passwd_params->dflt = 1;
 }
 
@@ -78,7 +77,7 @@ int main(int argc, char **argv)
 		set_param(argv, passwd_params);
 		get_count_param(passwd_params);
 		check_correct_param(*passwd_params);
-		if (passwd_params->count_params == 1)
+		if (passwd_params->count_flags == 0)
 			set_deflt(passwd_params);
 		create_password(&passwd, passwd_params);
 		if (passwd_params->dflt == 0)

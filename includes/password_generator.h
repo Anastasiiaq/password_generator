@@ -16,7 +16,7 @@ typedef struct s_param
 	int	uppercase_letter;
 	int	num;
 	int	special_symb;
-	int	count_params;
+	int	count_flags;
 	int	dflt;
 }				t_param;
 
